@@ -9,6 +9,7 @@ const cors = require("cors");
 const connectDb = require("../services/connectDb");
 const { handleGeneralErrors } = require("../errorHandler");
 const appRoutes = require("../app");
+const chatRoutes = require("../app/chat/routes");
 const { default: mongoose } = require("mongoose");
 
 const app = express();
