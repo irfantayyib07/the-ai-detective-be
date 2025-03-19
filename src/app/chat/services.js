@@ -10,6 +10,7 @@ async function uploadDocumentSource(fileBuffer, fileName) {
  try {
   const formData = new FormData();
   formData.append("file", fileBuffer, fileName);
+  formData.append("is_ocr_enabled", "true");
 
   const response = await axios.post(`${API_BASE_URL}/projects/${PROJECT_ID}/sources`, formData, {
    headers: {
