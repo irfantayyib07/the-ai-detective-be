@@ -5,14 +5,36 @@ const {
  sendFollowUpMessage,
 } = require("./services");
 
-const analyzeDocument = async (req, res) => {
+const uploadDocument = async (req, res) => {
  try {
-  const question = req.body.question;
-
   const fileBuffer = req.file.buffer;
   const fileName = req.file.originalname;
 
   const sourceId = await uploadDocumentSource(fileBuffer, fileName);
+
+  res.status(200).json({
+   success: true,
+   sourceId: sourceId,
+   message: "Document uploaded successfully",
+  });
+ } catch (error) {
+  console.error("Document upload error:", error);
+  res.status(500).json({
+   success: false,
+   error: `An error occurred during document upload: ${error.message}`,
+  });
+ }
+};
+
+const analyzeDocument = async (req, res) => {
+ try {
+  const question = req.body.question;
+  const sourceId = req.body.sourceId;
+
+  // const fileBuffer = req.file.buffer;
+  // const fileName = req.file.originalname;
+
+  // const sourceId = await uploadDocumentSource(fileBuffer, fileName);
   const sessionId = await createConversation();
   const analysisResult = await sendMessageWithSourceReference(sessionId, sourceId, question);
 
@@ -45,4 +67,4 @@ const followUpQuestion = async (req, res) => {
  }
 };
 
-module.exports = { analyzeDocument, followUpQuestion };
+module.exports = { uploadDocument, analyzeDocument, followUpQuestion };
