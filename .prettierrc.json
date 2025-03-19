@@ -12,6 +12,5 @@
  "singleQuote": false,
  "jsxSingleQuote": false,
  "tabWidth": 1,
- "trailingComma": "all",
- "useTabs": false
+ "trailingComma": "all"
 }
