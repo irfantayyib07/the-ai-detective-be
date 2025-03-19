@@ -12,14 +12,12 @@ const analyzeDocument = async (req, res) => {
   const fileBuffer = req.file.buffer;
   const fileName = req.file.originalname;
 
-  // const cloudinaryUrl = await uploadSingleFile(fileBuffer);
   const sourceId = await uploadDocumentSource(fileBuffer, fileName);
   const sessionId = await createConversation();
   const analysisResult = await sendMessageWithSourceReference(sessionId, sourceId, question);
 
   res.status(200).json({
    success: true,
-   // cloudinaryUrl,
    summary: analysisResult.summary,
    conversationId: sessionId,
    sourceId: sourceId,
