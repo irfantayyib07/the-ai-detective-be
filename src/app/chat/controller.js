@@ -14,8 +14,9 @@ const uploadDocument = async (req, res) => {
 
   res.status(200).json({
    success: true,
-   sourceId: sourceId,
    message: "Document uploaded successfully",
+   sourceId: sourceId,
+   fileName,
   });
  } catch (error) {
   console.error("Document upload error:", error);
@@ -30,17 +31,19 @@ const analyzeDocument = async (req, res) => {
  try {
   const question = req.body.question;
   const sourceId = req.body.sourceId;
+  const fileName = req.body.fileName;
 
   // const fileBuffer = req.file.buffer;
   // const fileName = req.file.originalname;
 
   // const sourceId = await uploadDocumentSource(fileBuffer, fileName);
   const sessionId = await createConversation();
-  const analysisResult = await sendMessageWithSourceReference(sessionId, sourceId, question);
+  const analysisResult = await sendMessageWithSourceReference(sessionId, sourceId, fileName, question);
 
   res.status(200).json({
    success: true,
    summary: analysisResult.summary,
+   detailedAnalysis: analysisResult.detailedAnalysis,
    conversationId: sessionId,
    sourceId: sourceId,
   });
@@ -52,9 +55,9 @@ const analyzeDocument = async (req, res) => {
 
 const followUpQuestion = async (req, res) => {
  try {
-  const { conversationId, question, sourceId } = req.body;
+  const { conversationId, question, sourceId, fileName } = req.body;
 
-  const result = await sendFollowUpMessage(conversationId, question, sourceId);
+  const result = await sendFollowUpMessage(conversationId, question, sourceId, fileName);
 
   res.json({
    success: true,

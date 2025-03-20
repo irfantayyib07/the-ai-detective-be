@@ -5,9 +5,9 @@ const { getAllUsers, createNewUser, updateUser, deleteUser } = require("./contro
 
 const router = express.Router();
 
-router.get("/users", getAllUsers);
-router.post("/users", validateUserCreation, handleValidationErrors, createNewUser);
-router.patch("/users/:userId", validateUserUpdate, handleValidationErrors, updateUser);
-router.delete("/users/:userId", validateUserId, handleValidationErrors, deleteUser);
+router.get("/user/getAllUsers", getAllUsers);
+router.post("/user/createNewUser", validateUserCreation, handleValidationErrors, createNewUser);
+router.patch("/user/updateUser/:userId", validateUserUpdate, handleValidationErrors, updateUser);
+router.delete("/user/deleteUser/:userId", validateUserId, handleValidationErrors, deleteUser);
 
 module.exports = router;

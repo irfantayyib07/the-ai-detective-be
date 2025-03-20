@@ -46,9 +46,11 @@ async function createConversation() {
  }
 }
 
-async function sendMessageWithSourceReference(sessionId, sourceId, question) {
+async function sendMessageWithSourceReference(sessionId, sourceId, fileName, question) {
  try {
-  const prompt = `Reference the document I've uploaded (source ID: ${sourceId}) and answer this question: ${question}`;
+  const prompt = `Reference the document I've uploaded (source ID: ${sourceId} and file name: ${fileName}), and answer the following question: ${question}.\n\nNote: Make sure your response is in proper markdown format which, when converted into HTML using JS libraries like "marked", results in a properly formatted HTML content, with bold headings, proper line breaks and new lines etc., but do not add horizontal lines anywhere and do not over-format, keep it simple and sensible.`;
+
+  console.log(prompt);
 
   const response = await axios.post(
    `${API_BASE_URL}/projects/${PROJECT_ID}/conversations/${sessionId}/messages`,
@@ -71,8 +73,14 @@ async function sendMessageWithSourceReference(sessionId, sourceId, question) {
 
   const aiResponse = response.data.data.openai_response;
   const parts = aiResponse.split("\n\n");
-  const summary = parts[0];
+  let summary = parts[0];
   const detailedAnalysis = parts.slice(1).join("\n\n");
+
+  console.log(summary, detailedAnalysis);
+
+  if (summary === detailedAnalysis) {
+   summary = "";
+  }
 
   return {
    summary,
@@ -84,7 +92,7 @@ async function sendMessageWithSourceReference(sessionId, sourceId, question) {
  }
 }
 
-async function sendFollowUpMessage(conversationId, question, sourceId) {
+async function sendFollowUpMessage(conversationId, question, sourceId, fileName) {
  try {
   // let prompt = `Follow-up question: ${question}`;
   // if (sourceId) {
@@ -112,8 +120,14 @@ async function sendFollowUpMessage(conversationId, question, sourceId) {
 
   const aiResponse = response.data.data.openai_response;
   const parts = aiResponse.split("\n\n");
-  const summary = parts[0];
+  let summary = parts[0];
   const detailedFollowUp = parts.slice(1).join("\n\n");
+
+  console.log(summary, detailedFollowUp);
+
+  if (summary === detailedFollowUp) {
+   summary = "";
+  }
 
   return {
    summary,

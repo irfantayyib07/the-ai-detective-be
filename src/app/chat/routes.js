@@ -7,19 +7,19 @@ const { uploadDocument, analyzeDocument, followUpQuestion } = require("./control
 const router = express.Router();
 
 router.post(
- "/chat/upload-source",
+ "/chat/uploadDocument",
  upload.single("document"),
  validateFileUpload,
  handleValidationErrors,
  uploadDocument,
 );
 router.post(
- "/chat/analyze",
+ "/chat/analyzeDocument",
  // upload.single("document"),
  validateChatRequest,
  handleValidationErrors,
  analyzeDocument,
 );
-router.post("/chat/follow-up", validateFollowUpRequest, handleValidationErrors, followUpQuestion);
+router.post("/chat/followUpQuestion", validateFollowUpRequest, handleValidationErrors, followUpQuestion);
 
 module.exports = router;
