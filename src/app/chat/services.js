@@ -76,7 +76,7 @@ async function sendMessageWithSourceReference(sessionId, sourceId, fileName, que
   let summary = parts[0];
   const detailedAnalysis = parts.slice(1).join("\n\n");
 
-  console.log(summary, detailedAnalysis);
+  console.log("SUMMARY:", summary, "DETAILS:", detailedAnalysis);
 
   if (summary === detailedAnalysis) {
    summary = "";
@@ -123,7 +123,7 @@ async function sendFollowUpMessage(conversationId, question, sourceId, fileName)
   let summary = parts[0];
   const detailedFollowUp = parts.slice(1).join("\n\n");
 
-  console.log(summary, detailedFollowUp);
+  console.log("SUMMARY:", summary, "DETAILS:", detailedFollowUp);
 
   if (summary === detailedFollowUp) {
    summary = "";
