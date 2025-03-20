@@ -67,15 +67,15 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
  const { email, username, password } = req.body;
 
- const foundUser = (
-  await User.findOne({
-   $or: [{ username }, { email }],
-  })
- ).toObject();
+ let foundUser = await User.findOne({
+  $or: [{ username }, { email }],
+ });
 
  if (!foundUser || !foundUser.active) {
   return res.status(401).json({ message: "No user found with the given credentials" });
  }
+
+ foundUser = foundUser.toObject();
 
  const match = await bcrypt.compare(password, foundUser.password);
 
