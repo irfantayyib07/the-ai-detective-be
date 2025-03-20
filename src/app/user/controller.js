@@ -2,7 +2,7 @@ const User = require("./model");
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
- const users = await User.find().select("-password").lean();
+ const users = await User.find().select("-password");
  if (!users.length) {
   return res.status(400).json({ success: false, message: "No users found", data: null });
  }
@@ -12,8 +12,8 @@ const getAllUsers = async (req, res) => {
 const createNewUser = async (req, res) => {
  const { email, username, password } = req.body;
 
- const duplicateEmail = await User.findOne({ email }).collation({ locale: "en", strength: 2 }).lean();
- const duplicateUsername = await User.findOne({ username }).collation({ locale: "en", strength: 2 }).lean();
+ const duplicateEmail = await User.findOne({ email }).collation({ locale: "en", strength: 2 });
+ const duplicateUsername = await User.findOne({ username }).collation({ locale: "en", strength: 2 });
 
  if (duplicateEmail)
   return res.status(409).json({ success: false, message: "Email is already in use", data: null });
@@ -33,11 +33,10 @@ const updateUser = async (req, res) => {
  const user = await User.findById(userId);
  if (!user) return res.status(404).json({ success: false, message: "User not found", data: null });
 
- const duplicateEmail = email
-  ? await User.findOne({ email }).collation({ locale: "en", strength: 2 }).lean()
-  : null;
+ const duplicateEmail = email ? await User.findOne({ email }).collation({ locale: "en", strength: 2 }) : null;
+
  const duplicateUsername = username
-  ? await User.findOne({ username }).collation({ locale: "en", strength: 2 }).lean()
+  ? await User.findOne({ username }).collation({ locale: "en", strength: 2 })
   : null;
 
  if (duplicateEmail && duplicateEmail._id.toString() !== userId) {
