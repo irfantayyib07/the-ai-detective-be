@@ -2,7 +2,7 @@ const express = require("express");
 const { validateSignup, validateLogin } = require("./validators");
 const { handleValidationErrors } = require("../../errorHandler");
 const { signup, login, refreshAccessToken, logout } = require("./controller");
-const verifyJwt = require("../../middleware/verifyJwt");
+const verifyJwt = require("../../middleware/verify-jwt");
 
 const router = express.Router();
 

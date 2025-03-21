@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const verifyJwt = require("../middleware/verifyJwt");
+const verifyJwt = require("../middleware/verify-jwt");
 const authRoutes = require("./auth/routes");
 const userRoutes = require("./user/routes");
 const chatRoutes = require("./chat/routes");
