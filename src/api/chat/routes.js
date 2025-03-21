@@ -13,13 +13,7 @@ router.post(
  handleValidationErrors,
  uploadDocument,
 );
-router.post(
- "/chat/analyzeDocument",
- // upload.single("document"),
- validateChatRequest,
- handleValidationErrors,
- analyzeDocument,
-);
+router.post("/chat/analyzeDocument", validateChatRequest, handleValidationErrors, analyzeDocument);
 router.post("/chat/followUpQuestion", validateFollowUpRequest, handleValidationErrors, followUpQuestion);
 
 module.exports = router;
