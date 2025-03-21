@@ -32,7 +32,7 @@ const signup = async (req, res) => {
     username: newUser.username,
    },
    process.env.ACCESS_TOKEN_SECRET,
-   { expiresIn: "15m" },
+   { expiresIn: "8d" },
   );
 
   const refreshToken = jwt.sign(
@@ -87,7 +87,7 @@ const login = async (req, res) => {
    username: foundUser.username,
   },
   process.env.ACCESS_TOKEN_SECRET,
-  { expiresIn: "15m" },
+  { expiresIn: "8d" },
  );
 
  const refreshToken = jwt.sign(
@@ -135,7 +135,7 @@ const refreshAccessToken = (req, res) => {
     username: foundUser.username,
    },
    process.env.ACCESS_TOKEN_SECRET,
-   { expiresIn: "15m" },
+   { expiresIn: "8d" },
   );
 
   res.status(200).json({ success: true, data: accessToken, message: "Token refreshed successfully" });
