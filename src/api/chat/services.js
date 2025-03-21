@@ -72,20 +72,8 @@ async function sendMessageWithSourceReference(sessionId, sourceId, fileName, que
   );
 
   const aiResponse = response.data.data.openai_response;
-  const parts = aiResponse.split("\n\n");
-  let summary = parts[0];
-  const detailedAnalysis = parts.slice(1).join("\n\n");
 
-  console.log("SUMMARY:", summary, "DETAILS:", detailedAnalysis);
-
-  if (summary === detailedAnalysis) {
-   summary = "";
-  }
-
-  return {
-   summary,
-   detailedAnalysis: detailedAnalysis || summary,
-  };
+  return aiResponse;
  } catch (error) {
   console.error("Error sending message:", error.response?.data || error.message);
   throw new Error("Failed to get analysis from CustomGPT");
@@ -119,20 +107,8 @@ async function sendFollowUpMessage(conversationId, question, sourceId, fileName)
   );
 
   const aiResponse = response.data.data.openai_response;
-  const parts = aiResponse.split("\n\n");
-  let summary = parts[0];
-  const detailedFollowUp = parts.slice(1).join("\n\n");
 
-  console.log("SUMMARY:", summary, "DETAILS:", detailedFollowUp);
-
-  if (summary === detailedFollowUp) {
-   summary = "";
-  }
-
-  return {
-   summary,
-   detailedResponse: detailedFollowUp || summary,
-  };
+  return aiResponse;
  } catch (error) {
   console.error("Error sending follow-up message:", error.response?.data || error.message);
   throw new Error("Failed to get response from CustomGPT");

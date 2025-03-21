@@ -38,12 +38,11 @@ const analyzeDocument = async (req, res) => {
 
   // const sourceId = await uploadDocumentSource(fileBuffer, fileName);
   const sessionId = await createConversation();
-  const analysisResult = await sendMessageWithSourceReference(sessionId, sourceId, fileName, question);
+  const aiResponse = await sendMessageWithSourceReference(sessionId, sourceId, fileName, question);
 
   res.status(200).json({
    success: true,
-   summary: analysisResult.summary,
-   detailedAnalysis: analysisResult.detailedAnalysis,
+   aiResponse,
    conversationId: sessionId,
    sourceId: sourceId,
   });
@@ -57,12 +56,11 @@ const followUpQuestion = async (req, res) => {
  try {
   const { conversationId, question, sourceId, fileName } = req.body;
 
-  const result = await sendFollowUpMessage(conversationId, question, sourceId, fileName);
+  const aiResponse = await sendFollowUpMessage(conversationId, question, sourceId, fileName);
 
   res.json({
    success: true,
-   summary: result.summary,
-   detailedResponse: result.detailedResponse,
+   aiResponse,
   });
  } catch (error) {
   console.error("Follow-up error:", error);
