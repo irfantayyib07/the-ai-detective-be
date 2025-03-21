@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
-const connectDb = require("../services/connectDb");
+const connectDb = require("../services/connect-db");
 const { handleGeneralErrors } = require("../errorHandler");
 const appRoutes = require("../api");
 const { default: mongoose } = require("mongoose");

@@ -1,10 +1,10 @@
 {
  "name": "be-2",
  "version": "1.0.0",
- "main": "./src/api/index.js",
+ "main": "./src/app/index.js",
  "scripts": {
-  "start": "node ./src/api/index.js",
-  "dev": "nodemon ./src/api/index.js",
+  "start": "node ./src/app/index.js",
+  "dev": "nodemon ./src/app/index.js",
   "format": "prettier --write ."
  },
  "keywords": [],
