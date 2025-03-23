@@ -9,7 +9,7 @@ const chatRoutes = require("./chat/routes");
 router.use(authRoutes);
 
 // Totally Protected Routes
-router.use(verifyJwt);
+// router.use(verifyJwt);
 router.use(userRoutes);
 router.use(chatRoutes);
 
