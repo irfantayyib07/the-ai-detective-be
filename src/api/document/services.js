@@ -6,7 +6,7 @@ const API_KEY = process.env.CUSTOMGPT_API_KEY;
 
 async function deleteDocument(sourceId) {
  try {
-  const response = await axios.post(`${API_BASE_URL}/projects/${PROJECT_ID}/pages/${sourceId}`, {
+  const response = await axios.delete(`${API_BASE_URL}/projects/${PROJECT_ID}/pages/${sourceId}`, {
    headers: {
     Authorization: `Bearer ${API_KEY}`,
     "Content-Type": "application/json",
@@ -16,8 +16,8 @@ async function deleteDocument(sourceId) {
 
   return response.data.data.deleted;
  } catch (error) {
-  console.error("Error creating document:", error.response?.data || error.message);
-  throw new Error("Failed to create document");
+  console.error("Error deleting document:", error.response?.data || error.message);
+  throw new Error("Failed to delete document");
  }
 }
 

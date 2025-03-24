@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const conversationSchema = new mongoose.Schema({
- conversations: [{ id: String }],
+ id: String,
 });
 
 module.exports = mongoose.model("Conversation", conversationSchema);

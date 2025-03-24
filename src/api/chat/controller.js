@@ -4,7 +4,6 @@ const {
  sendMessageWithSourceReference,
  sendFollowUpMessage,
 } = require("./services");
-const Document = require("../document/model");
 const Conversation = require("../conversation/model");
 
 const uploadDocument = async (req, res) => {
@@ -13,8 +12,6 @@ const uploadDocument = async (req, res) => {
   const fileName = req.file.originalname;
 
   const sourceId = await uploadDocumentSource(fileBuffer, fileName);
-
-  Document.create({ id: sourceId });
 
   res.status(200).json({
    success: true,
