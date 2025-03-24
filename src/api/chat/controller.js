@@ -4,6 +4,8 @@ const {
  sendMessageWithSourceReference,
  sendFollowUpMessage,
 } = require("./services");
+const Document = require("../document/model");
+const Conversation = require("../conversation/model");
 
 const uploadDocument = async (req, res) => {
  try {
@@ -11,6 +13,8 @@ const uploadDocument = async (req, res) => {
   const fileName = req.file.originalname;
 
   const sourceId = await uploadDocumentSource(fileBuffer, fileName);
+
+  Document.create({ id: sourceId });
 
   res.status(200).json({
    success: true,
@@ -38,6 +42,9 @@ const analyzeDocument = async (req, res) => {
 
   // const sourceId = await uploadDocumentSource(fileBuffer, fileName);
   const sessionId = await createConversation();
+
+  Conversation.create({ id: sessionId });
+
   const aiResponse = await sendMessageWithSourceReference(sessionId, sourceId, fileName, question);
 
   res.status(200).json({
