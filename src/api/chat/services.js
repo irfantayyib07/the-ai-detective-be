@@ -48,7 +48,7 @@ async function createConversation() {
 
 async function sendMessageWithSourceReference(sessionId, sourceId, fileName, question) {
  try {
-  const prompt = `Reference the document I've uploaded (source ID: ${sourceId} and file name: ${fileName}), and answer the following question: ${question}.\n\nNote: Make sure your response is in proper markdown format which, when converted into HTML using JS libraries like "marked", results in a properly formatted HTML content, with proper line breaks and new lines etc., but do not add horizontal lines anywhere and do not over-format, keep it simple and sensible.`;
+  const prompt = `Reference the document I've uploaded (source ID: ${sourceId} and file name: ${fileName}), and answer the following question: ${question}.\n\nNote: Make sure your response is in proper markdown format which, when converted into HTML using JS libraries like "marked", results in a properly formatted HTML content, with bold headings, proper line breaks and new lines etc., but do not add horizontal lines anywhere and do not over-format, keep it simple and sensible.`;
 
   console.log(prompt);
 
