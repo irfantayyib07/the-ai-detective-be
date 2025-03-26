@@ -46,6 +46,27 @@ async function createConversation() {
  }
 }
 
+async function sendReindexDocumentRequest(pageId) {
+ try {
+  const response = await axios.post(
+   `${API_BASE_URL}/projects/${PROJECT_ID}/pages/${pageId}/reindex`,
+   {},
+   {
+    headers: {
+     Authorization: `Bearer ${API_KEY}`,
+     "Content-Type": "application/json",
+     Accept: "application/json",
+    },
+   },
+  );
+
+  return response.data;
+ } catch (error) {
+  console.error("Error reindexing document:", error.response?.data || error.message);
+  throw new Error("Failed to reindex the document");
+ }
+}
+
 async function sendMessageWithSourceReference(sessionId, sourceId, fileName, question) {
  try {
   const prompt = `Reference the document I've uploaded (source ID: ${sourceId} and file name: ${fileName}), and answer the following question: ${question}.\n\nNote: Make sure your response is in proper markdown format which, when converted into HTML using JS libraries like "marked", results in a properly formatted HTML content, with bold headings, proper line breaks and new lines etc., but do not add horizontal lines anywhere and do not over-format, keep it simple and sensible.`;
@@ -75,7 +96,7 @@ async function sendMessageWithSourceReference(sessionId, sourceId, fileName, que
 
   return aiResponse;
  } catch (error) {
-  console.error("Error sending message:", error.response?.data || error.message);
+  console.error("Error analyzing document:", error.response?.data || error.message);
   throw new Error("Failed to get analysis from CustomGPT");
  }
 }
@@ -117,6 +138,7 @@ async function sendFollowUpMessage(conversationId, question, sourceId, fileName)
 
 module.exports = {
  uploadDocumentSource,
+ sendReindexDocumentRequest,
  createConversation,
  sendMessageWithSourceReference,
  sendFollowUpMessage,

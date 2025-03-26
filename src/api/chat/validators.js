@@ -13,6 +13,15 @@ exports.validateFileUpload = [
  },
 ];
 
+exports.validateReindexDocument = [
+ body("pageId")
+  .notEmpty()
+  .withMessage("Page ID is required")
+  .bail()
+  .isString()
+  .withMessage("Page ID must be a string"),
+];
+
 exports.validateChatRequest = [
  body("question")
   .notEmpty()

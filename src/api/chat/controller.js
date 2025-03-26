@@ -3,6 +3,7 @@ const {
  createConversation,
  sendMessageWithSourceReference,
  sendFollowUpMessage,
+ sendReindexDocumentRequest,
 } = require("./services");
 const Conversation = require("../conversation/model");
 
@@ -25,6 +26,23 @@ const uploadDocument = async (req, res) => {
    success: false,
    error: `An error occurred during document upload: ${error.message}`,
   });
+ }
+};
+
+const reindexDocument = async (req, res) => {
+ try {
+  const pageId = req.body.pageId;
+
+  const response = await sendReindexDocumentRequest(pageId);
+
+  res.status(200).json({
+   success: true,
+   data: response.data.updated,
+   message: "Document reindexed successfully",
+  });
+ } catch (error) {
+  console.error("Reindexing error:", error);
+  res.status(500).json({ error: `An error occurred during document reindexing: ${error.message}` });
  }
 };
 
@@ -72,4 +90,4 @@ const followUpQuestion = async (req, res) => {
  }
 };
 
-module.exports = { uploadDocument, analyzeDocument, followUpQuestion };
+module.exports = { uploadDocument, reindexDocument, analyzeDocument, followUpQuestion };

@@ -1,8 +1,13 @@
 const express = require("express");
 const upload = require("../../config/multer");
-const { validateFileUpload, validateChatRequest, validateFollowUpRequest } = require("./validators");
+const {
+ validateFileUpload,
+ validateReindexDocument,
+ validateChatRequest,
+ validateFollowUpRequest,
+} = require("./validators");
 const { handleValidationErrors } = require("../../errorHandler");
-const { uploadDocument, analyzeDocument, followUpQuestion } = require("./controller");
+const { uploadDocument, analyzeDocument, followUpQuestion, reindexDocument } = require("./controller");
 
 const router = express.Router();
 
@@ -13,6 +18,7 @@ router.post(
  handleValidationErrors,
  uploadDocument,
 );
+router.post("/chat/reindexDocument", validateReindexDocument, handleValidationErrors, reindexDocument);
 router.post("/chat/analyzeDocument", validateChatRequest, handleValidationErrors, analyzeDocument);
 router.post("/chat/followUpQuestion", validateFollowUpRequest, handleValidationErrors, followUpQuestion);
 
